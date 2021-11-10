@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Button } from '@material-ui/core'
+import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TasksList from './TasksList'
 import AddTask from './AddTask'
@@ -8,6 +8,9 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Stack from '@mui/material/Stack'
+import Add from '@mui/icons-material/Add'
 
 import firebaseApp from '../config/firebaseConfig'
 import { getAuth, signOut } from 'firebase/auth'
@@ -33,11 +36,7 @@ const BasicModal = ({ setArrayInfoUsers, userEmail, arrayInfo }) => {
 	return (
 		<div>
 			<CssBaseline />
-			<Button
-				variant="contained"
-				sx={{ mt: 3, mb: 3 }}
-				onClick={handleOpen}
-			>
+			<Button variant="contained" startIcon={<Add />} onClick={handleOpen}>
 				Agregar
 			</Button>
 			<Modal
@@ -70,6 +69,8 @@ const fakedata = [
 	createData('Matias Lopez', 2, 'Calle 24 # 11-11', 'matias@gmail.com'),
 	createData('Erica Orrego', 30, 'Carrera 5 # 10-187', 'erica@gmail.com'),
 ]
+
+const theme = createTheme()
 
 const Home = ({ userEmail }) => {
 	const [ArrayInfoUsers, setArrayInfoUsers] = useState(null)
@@ -108,30 +109,55 @@ const Home = ({ userEmail }) => {
 	}, [])
 
 	return (
-		<>
-			<Container>
+		<ThemeProvider theme={theme}>
 			<CssBaseline />
-				<Typography variant="h3" component="h5">
-					Lista de Usuarios {userEmail}
-				</Typography>
-
+			<main>
+				<Box
+					sx={{
+						bgcolor: 'background.paper',
+						pt: 5,
+						pb: 6,
+					}}
+				>
+					<Container maxWidth="sm">
+						<Typography
+							component="h1"
+							variant="h5"
+							align="center"
+							color="text.secondary"
+							gutterBottom
+						>
+							Lista de Usuarios de {userEmail}
+						</Typography>
+					</Container>
+				</Box>
+			</main>
+			<Container>
 				<BasicModal
 					setArrayInfoUsers={setArrayInfoUsers}
 					userEmail={userEmail}
 					arrayInfo={ArrayInfoUsers}
 				/>
 
-				{ArrayInfoUsers ? <TasksList arrayInfo={ArrayInfoUsers} /> : ''}
-				<Button
-					type="button"
-					variant="contained"
-					sx={{ mt: 3, mb: 2 }}
-					onClick={handleClose}
+				{ArrayInfoUsers ? <TasksList arrayInfo={ArrayInfoUsers} /> : 'Loader'}
+				<Stack
+					sx={{ pt: 4 }}
+					direction="row"
+					spacing={2}
+					justifyContent="center"
 				>
-					Cerrar sesión
-				</Button>
+					<Button
+						type="button"
+						variant="contained"
+						color="error"
+						sx={{ mt: 3, mb: 2 }}
+						onClick={handleClose}
+					>
+						Cerrar sesión
+					</Button>
+				</Stack>
 			</Container>
-		</>
+		</ThemeProvider>
 	)
 }
 
