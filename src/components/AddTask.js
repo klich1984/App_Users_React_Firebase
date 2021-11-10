@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
@@ -26,16 +26,12 @@ const AddTask = ({ userEmail, arrayInfo, setArrayInfoUsers }) => {
 		console.log(email, age, streetAddress, name) // contraseña debe ser mayor a 6 caracteres
 		// Crear nuevo array con los datos a actualizar
 		console.log(arrayInfo)
-		const newArrayUsers = [
-			...arrayInfo,
-			{ age, email, name, streetAddress },
-		]
+		const newArrayUsers = [...arrayInfo, { age, email, name, streetAddress }]
 		// Actualizar base de datos
 		const docuRef = doc(firestore, `users/${userEmail}`)
-		updateDoc(docuRef, {users: [...newArrayUsers]})
+		updateDoc(docuRef, { users: [...newArrayUsers] })
 		// Actualizar estado
 		setArrayInfoUsers(newArrayUsers)
-
 	}
 
 	return (

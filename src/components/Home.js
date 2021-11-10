@@ -5,14 +5,13 @@ import CssBaseline from '@mui/material/CssBaseline'
 import TasksList from './TasksList'
 import AddTask from './AddTask'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
 
 import firebaseApp from '../config/firebaseConfig'
 import { getAuth, signOut } from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
-import { textAlign } from '@mui/system'
 
 const style = {
 	position: 'absolute',
@@ -33,7 +32,14 @@ const BasicModal = ({ setArrayInfoUsers, userEmail, arrayInfo }) => {
 
 	return (
 		<div>
-			<Button onClick={handleOpen}>Agregar</Button>
+			<CssBaseline />
+			<Button
+				variant="contained"
+				sx={{ mt: 3, mb: 3 }}
+				onClick={handleOpen}
+			>
+				Agregar
+			</Button>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -65,7 +71,7 @@ const fakedata = [
 	createData('Erica Orrego', 30, 'Carrera 5 # 10-187', 'erica@gmail.com'),
 ]
 
-const Home = ({ userEmail, userglobal }) => {
+const Home = ({ userEmail }) => {
 	const [ArrayInfoUsers, setArrayInfoUsers] = useState(null)
 
 	async function getDocumentOrCreateDocument(idDocumentt) {
@@ -88,6 +94,10 @@ const Home = ({ userEmail, userglobal }) => {
 		}
 	}
 
+	const handleClose = () => {
+		signOut(auth)
+	}
+
 	useEffect(() => {
 		async function fetchInfo() {
 			const info = await getDocumentOrCreateDocument(userEmail)
@@ -99,9 +109,11 @@ const Home = ({ userEmail, userglobal }) => {
 
 	return (
 		<>
-			<CssBaseline />
 			<Container>
-				<h2>Lista de Usuarios {userEmail}</h2>
+			<CssBaseline />
+				<Typography variant="h3" component="h5">
+					Lista de Usuarios {userEmail}
+				</Typography>
 
 				<BasicModal
 					setArrayInfoUsers={setArrayInfoUsers}
@@ -114,9 +126,9 @@ const Home = ({ userEmail, userglobal }) => {
 					type="button"
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
-					onClick={() => signOut(auth)}
+					onClick={handleClose}
 				>
-					Cerar sesión
+					Cerrar sesión
 				</Button>
 			</Container>
 		</>

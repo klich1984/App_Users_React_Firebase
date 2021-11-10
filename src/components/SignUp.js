@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-// import { Link as RouterLink, MemoryRouter as Router } from 'react-router-dom'
+import React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -28,20 +27,12 @@ const theme = createTheme()
 
 
 export default function SignUp({ autenting, setAutenting }) {
-	const [checkingIn, setCheckingIn] = useState(false) // Ingresar variables dinamicamente
-
 	const handleSubmit = async (event) => {
 		event.preventDefault()
 		const data = new FormData(event.currentTarget)
 		// eslint-disable-next-line no-console
 		const email = data.get('email'),
 			password = data.get('password')
-		/* 	console.log({
-			firstName: data.get('firstName'),
-			lastName: data.get('lastName'),
-			email: data.get('email'),
-			password: data.get('password'),
-		}) */
 		// console.log(email, password) // contraseña debe ser mayor a 6 caracteres
 		const user = await createUserWithEmailAndPassword(auth, email, password)
 		console.log(user)
@@ -143,10 +134,7 @@ export default function SignUp({ autenting, setAutenting }) {
             </Button>
 						<Grid container justifyContent="flex-end">
 							<Grid item>
-								{/* <Link href="/login" variant="body2">
-                  ¿Ya tienes una cuenta? Ingresa Aquí
-                </Link> */}
-								<Link onClick={handleChange}>
+									<Link onClick={handleChange}>
 									¿Ya tienes una cuenta? Ingresa Aquí
 								</Link>
 							</Grid>

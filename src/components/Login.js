@@ -1,3 +1,4 @@
+import { CssBaseline } from '@material-ui/core'
 import React, { useState } from 'react'
 import SignUp from './SignUp'
 import ViewLogin from './viewLogin'
@@ -6,13 +7,14 @@ import ViewLogin from './viewLogin'
 const Login = () => {
   const [autenting, setAutenting] = useState(true)
 	return (
-		<div>
+		<>
+		<CssBaseline />
 			{autenting ? (
 				<SignUp autenting={autenting} setAutenting={setAutenting} />
 			) : (
 				<ViewLogin autenting={autenting} setAutenting={setAutenting} />
 			)}
-		</div>
+		</>
 	)
 }
 
